@@ -7,6 +7,7 @@ interface NavigationBarProps {
   currentScreen: ScreenType;
   immersiveMode: boolean;
   onScreenChange: (screen: ScreenType) => void;
+  isPC?: boolean;
 }
 
 const navItems = [
@@ -15,14 +16,22 @@ const navItems = [
   { id: "my" as ScreenType, icon: User, label: "마이" },
 ];
 
-export function NavigationBar({ currentScreen, immersiveMode, onScreenChange }: NavigationBarProps) {
+export function NavigationBar({ currentScreen, immersiveMode, onScreenChange, isPC = false }: NavigationBarProps) {
   // 네비게이션에 표시할 화면들만 필터링
   const showNavigation = ['home', 'explore', 'my'].includes(currentScreen);
   
   if (!showNavigation) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 w-full bg-black backdrop-blur-md border-t border-gray-800 z-50 pc-nav-container">
+    <div 
+      className="fixed bottom-0 bg-black backdrop-blur-md border-t border-gray-800 z-50"
+      style={{
+        left: isPC ? '50%' : '0',
+        right: isPC ? 'auto' : '0',
+        width: isPC ? '375px' : '100%',
+        transform: isPC ? 'translateX(-50%)' : 'none',
+      }}
+    >
       <div className="flex items-center justify-around py-2 px-8">
         {navItems.map((item) => {
           const Icon = item.icon;

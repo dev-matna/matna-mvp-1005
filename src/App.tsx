@@ -241,6 +241,7 @@ export default function App() {
             currentScreen={currentScreen}
             immersiveMode={immersiveMode}
             onScreenChange={setCurrentScreen}
+            isPC={isPC}
           />
         </div>
       </AudioProvider>
