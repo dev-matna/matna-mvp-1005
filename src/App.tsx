@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { VideoFeed } from "./components/VideoFeed";
 import { NavigationBar } from "./components/NavigationBar";
 import { TopBar, FeedMode } from "./components/TopBar";
@@ -27,6 +27,18 @@ export default function App() {
   const [selectedInfluencer, setSelectedInfluencer] = useState<any>(null);
   const [feedMode, setFeedMode] = useState<FeedMode>('trending');
   const [immersiveMode, setImmersiveMode] = useState(false);
+  const [isPC, setIsPC] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsPC(window.innerWidth >= 768);
+    };
+    
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
 
 
   // 목업 예약 데이터
@@ -199,9 +211,16 @@ export default function App() {
   return (
     <ErrorBoundary>
       <AudioProvider>
-        <div className="min-h-screen bg-gray-100">
-          {/* Mobile Container - Full width on mobile */}
-          <div className="w-full h-screen bg-white overflow-hidden relative">
+        <div 
+          className="min-h-screen bg-gray-100"
+          style={{
+            maxWidth: isPC ? '375px' : '100%',
+            margin: isPC ? '0 auto' : '0',
+            boxShadow: isPC ? '0 0 20px rgba(0, 0, 0, 0.1)' : 'none',
+          }}
+        >
+          {/* Mobile Container - Full width on mobile, constrained on PC */}
+          <div className="w-full h-screen bg-white relative">
             {renderScreen()}
             
             {/* Overlay TopBar only for explore screen */}
@@ -213,15 +232,17 @@ export default function App() {
               />
             )}
             
-            <NavigationBar 
-              currentScreen={currentScreen}
-              immersiveMode={immersiveMode}
-              onScreenChange={setCurrentScreen}
-            />
-            
             {/* Toast Notifications */}
             <Toaster />
           </div>
+          
+          {/* Navigation Bar - PC에서 모바일 폭으로 제한 */}
+          <NavigationBar 
+            currentScreen={currentScreen}
+            immersiveMode={immersiveMode}
+            onScreenChange={setCurrentScreen}
+            isPC={isPC}
+          />
         </div>
       </AudioProvider>
     </ErrorBoundary>

@@ -199,3 +199,9 @@
 html {
   font-size: var(--font-size);
 }
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
