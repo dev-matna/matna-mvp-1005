@@ -70,3 +70,38 @@
 - 토큰이나 비밀 정보는 절대 이 파일에 포함하지 마세요
 - 모든 민감한 정보는 [보안상 제거됨]으로 표시하세요
 - **절대 보안 토큰 키를 추가하지 않는다**
+
+## 환경 변수 관리 (.env)
+
+### `.env` 파일 사용법
+1. **파일 위치**: 프로젝트 루트 디렉토리
+2. **파일 생성**: `.env.example`을 복사하여 `.env` 생성
+   ```bash
+   cp .env.example .env
+   ```
+3. **실제 값 입력**: `.env` 파일에 실제 토큰 및 비밀 키 입력
+4. **Git 제외**: `.env` 파일은 자동으로 `.gitignore`에 포함되어 있음
+
+### 환경 변수 예시
+```bash
+# GitHub Personal Access Token
+GITHUB_TOKEN=your_actual_token_here
+
+# GitHub Repository URL
+GITHUB_REPO=https://github.com/your-username/your-repo-name
+
+# API URLs
+API_URL=http://localhost:3000
+```
+
+### Git Push with Token
+```bash
+# .env 파일에서 토큰을 읽어서 사용
+git push https://${GITHUB_TOKEN}@github.com/username/repo.git
+```
+
+### 중요 규칙
+- ✅ `.env` 파일은 로컬에만 보관
+- ✅ `.env.example`은 Git에 커밋 (실제 값 제외)
+- ❌ `.env` 파일은 절대 Git에 커밋하지 않음
+- ❌ 토큰을 코드나 커밋 메시지에 직접 작성하지 않음
