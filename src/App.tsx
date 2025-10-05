@@ -211,9 +211,16 @@ export default function App() {
   return (
     <ErrorBoundary>
       <AudioProvider>
-        <div className="min-h-screen bg-gray-100 pc-mobile-container">
+        <div 
+          className="min-h-screen bg-gray-100"
+          style={{
+            maxWidth: isPC ? '375px' : '100%',
+            margin: isPC ? '0 auto' : '0',
+            boxShadow: isPC ? '0 0 20px rgba(0, 0, 0, 0.1)' : 'none',
+          }}
+        >
           {/* Mobile Container - Full width on mobile, constrained on PC */}
-          <div className="w-full h-screen bg-white relative md:max-w-sm">
+          <div className="w-full h-screen bg-white relative">
             {renderScreen()}
             
             {/* Overlay TopBar only for explore screen */}
@@ -229,7 +236,7 @@ export default function App() {
             <Toaster />
           </div>
           
-          {/* Navigation Bar - Outside container for proper PC positioning */}
+          {/* Navigation Bar - PC에서 모바일 폭으로 제한 */}
           <NavigationBar 
             currentScreen={currentScreen}
             immersiveMode={immersiveMode}

@@ -205,24 +205,3 @@ html {
     padding-bottom: env(safe-area-inset-bottom);
   }
 }
-
-/* PC에서 모바일 뷰 강제 적용 - CSS 변수 방식 */
-:root {
-  --app-max-width: 100%;
-  --app-margin: 0;
-  --app-shadow: none;
-}
-
-@media (min-width: 768px) {
-  :root {
-    --app-max-width: 375px;
-    --app-margin: 0 auto;
-    --app-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.pc-mobile-container {
-  max-width: var(--app-max-width) !important;
-  margin: var(--app-margin) !important;
-  box-shadow: var(--app-shadow) !important;
-}
