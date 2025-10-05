@@ -200,8 +200,8 @@ export default function App() {
     <ErrorBoundary>
       <AudioProvider>
         <div className="min-h-screen bg-gray-100">
-          {/* Mobile Container - Full width on mobile */}
-          <div className="w-full h-screen bg-white overflow-hidden relative">
+          {/* Mobile Container - Full width on mobile, constrained on PC */}
+          <div className="w-full h-screen bg-white relative mobile-container">
             {renderScreen()}
             
             {/* Overlay TopBar only for explore screen */}
@@ -213,15 +213,16 @@ export default function App() {
               />
             )}
             
-            <NavigationBar 
-              currentScreen={currentScreen}
-              immersiveMode={immersiveMode}
-              onScreenChange={setCurrentScreen}
-            />
-            
             {/* Toast Notifications */}
             <Toaster />
           </div>
+          
+          {/* Navigation Bar - Outside container for proper PC positioning */}
+          <NavigationBar 
+            currentScreen={currentScreen}
+            immersiveMode={immersiveMode}
+            onScreenChange={setCurrentScreen}
+          />
         </div>
       </AudioProvider>
     </ErrorBoundary>
