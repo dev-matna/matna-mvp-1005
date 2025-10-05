@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { VideoFeed } from "./components/VideoFeed";
 import { NavigationBar } from "./components/NavigationBar";
 import { TopBar, FeedMode } from "./components/TopBar";
@@ -27,6 +27,18 @@ export default function App() {
   const [selectedInfluencer, setSelectedInfluencer] = useState<any>(null);
   const [feedMode, setFeedMode] = useState<FeedMode>('trending');
   const [immersiveMode, setImmersiveMode] = useState(false);
+  const [isPC, setIsPC] = useState(false);
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsPC(window.innerWidth >= 768);
+    };
+    
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
 
 
   // 목업 예약 데이터
@@ -199,9 +211,9 @@ export default function App() {
   return (
     <ErrorBoundary>
       <AudioProvider>
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 pc-mobile-container">
           {/* Mobile Container - Full width on mobile, constrained on PC */}
-          <div className="w-full h-screen bg-white relative mobile-container">
+          <div className="w-full h-screen bg-white relative md:max-w-sm">
             {renderScreen()}
             
             {/* Overlay TopBar only for explore screen */}

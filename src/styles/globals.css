@@ -206,17 +206,23 @@ html {
   }
 }
 
-/* PC에서 모바일 뷰 강제 적용 */
+/* PC에서 모바일 뷰 강제 적용 - CSS 변수 방식 */
+:root {
+  --app-max-width: 100%;
+  --app-margin: 0;
+  --app-shadow: none;
+}
+
 @media (min-width: 768px) {
-  body {
-    max-width: 375px;
-    margin: 0 auto;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  :root {
+    --app-max-width: 375px;
+    --app-margin: 0 auto;
+    --app-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
-  
-  /* PC에서도 모바일 컨테이너 폭 제한 */
-  .mobile-container {
-    max-width: 375px !important;
-    margin: 0 auto !important;
-  }
+}
+
+.pc-mobile-container {
+  max-width: var(--app-max-width) !important;
+  margin: var(--app-margin) !important;
+  box-shadow: var(--app-shadow) !important;
 }
